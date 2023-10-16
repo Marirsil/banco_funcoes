@@ -84,3 +84,13 @@ DELIMITER ;
 
 SELECT produto, quantidade, preco, TOTAL_VALOR(preco, quantidade) AS valor_total
 FROM produtos;
+
+SELECT COUNT(*) AS total_produtos FROM produtos;
+
+SELECT MAX(preco) AS produto_mais_caro FROM produtos;
+
+SELECT MIN(preco) AS produto_mais_barato FROM produtos;
+
+SELECT
+    SUM(IF(quantidade > 0, preco, 0)) AS soma_produtos_em_estoque
+FROM produtos;
