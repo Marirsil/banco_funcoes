@@ -56,3 +56,17 @@ FROM eventos
 WHERE data_evento = '2023-11-05';
 
 SELECT data_evento, DAYNAME(data_evento) AS dia_da_semana FROM eventos;
+
+SELECT
+    produto,
+    IF(quantidade > 0, 'Em estoque', 'Fora de estoque') AS status_estoque
+FROM produtos;
+
+SELECT
+    produto,
+    CASE
+        WHEN preco < 10 THEN 'Barato'
+        WHEN preco >= 10 AND preco <= 20 THEN 'Médio'
+        ELSE 'Caro'
+    END AS categoria_preco
+FROM produtos;
