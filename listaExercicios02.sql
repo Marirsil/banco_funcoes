@@ -94,3 +94,52 @@ SELECT MIN(preco) AS produto_mais_barato FROM produtos;
 SELECT
     SUM(IF(quantidade > 0, preco, 0)) AS soma_produtos_em_estoque
 FROM produtos;
+
+
+
+DELIMITER //
+CREATE FUNCTION Fatorial(n INT)
+RETURNS INT
+BEGIN
+    DECLARE result INT;
+    SET result = 1;
+    WHILE n > 0 DO
+        SET result = result * n;
+        SET n = n - 1;
+    END WHILE;
+    RETURN result;
+END;
+//
+DELIMITER ;
+DELIMITER //
+CREATE FUNCTION Exponencial(base DECIMAL(10, 2), expoente INT)
+RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE result DECIMAL(10, 2);
+    SET result = 1;
+    IF expoente >= 0 THEN
+        WHILE expoente > 0 DO
+            SET result = result * base;
+            SET expoente = expoente - 1;
+        END WHILE;
+    ELSE
+        RETURN NULL;
+    END IF;
+    RETURN result;
+END;
+//
+DELIMITER ;
+DELIMITER //
+CREATE FUNCTION Palindromo(palavra VARCHAR(255))
+RETURNS INT
+BEGIN
+    DECLARE palavra_reversa VARCHAR(255);
+    SET palavra_reversa = REVERSE(palavra);
+    IF palavra = palavra_reversa THEN
+        RETURN 1; 
+    ELSE
+        RETURN 0; 
+    END IF;
+END;
+//
+DELIMITER ;
