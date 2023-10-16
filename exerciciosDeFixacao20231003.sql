@@ -17,3 +17,25 @@ BEGIN
     
     RETURN lista_livros;
 END;
+
+CREATE FUNCTION atualizar_resumos()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE livro_id INT;
+    DECLARE resumo_livro TEXT;
+    DECLARE cur CURSOR FOR SELECT id, resumo FROM Livro;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO livro_id, resumo_livro;
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+        UPDATE Livro SET resumo = CONCAT(resumo_livro, ' Este é um excelente livro!') WHERE id = livro_id;
+    END LOOP;
+
+    CLOSE cur;
+END;
