@@ -57,3 +57,14 @@ BEGIN
 
     RETURN media;
 END;
+
+CREATE FUNCTION autores_sem_livros() RETURNS TABLE
+BEGIN
+    DECLARE lista_autores CURSOR FOR
+    SELECT Autor.id, Autor.primeiro_nome, Autor.ultimo_nome
+    FROM Autor
+    LEFT JOIN Livro_Autor ON Autor.id = Livro_Autor.autor_id
+    WHERE Livro_Autor.autor_id IS NULL;
+
+    RETURN lista_autores;
+END;
