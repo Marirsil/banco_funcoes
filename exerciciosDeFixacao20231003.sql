@@ -39,3 +39,21 @@ BEGIN
 
     CLOSE cur;
 END;
+
+CREATE FUNCTION media_livros_por_editora() RETURNS DECIMAL(10, 2)
+BEGIN
+    DECLARE total_livros INT;
+    DECLARE total_editoras INT;
+    DECLARE media DECIMAL(10, 2);
+    SELECT SUM(qtd_livros) INTO total_livros FROM (SELECT editora_id, COUNT(*) AS qtd_livros FROM Livro GROUP BY editora_id) AS editora_livros;
+
+    SELECT COUNT(*) INTO total_editoras FROM Editora;
+
+    IF total_editoras > 0 THEN
+        SET media = total_livros / total_editoras;
+    ELSE
+        SET media = 0;
+    END IF;
+
+    RETURN media;
+END;
